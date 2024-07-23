@@ -103,6 +103,7 @@ theme: next
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: rsync
-  host: 192.168.5.1
+  host: mmitsuha.xyz
   user: root
   root: /root/blog
+  port: 2200

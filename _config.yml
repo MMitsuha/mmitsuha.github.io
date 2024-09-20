@@ -102,8 +102,6 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: rsync
-  host: mmitsuha.xyz
-  user: root
-  root: /root/blog
-  port: 2200
+  type: git
+  repo: https://github.com/MMitsuha/mmitsuha.github.io.git
+  branch: master

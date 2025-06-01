@@ -8,3 +8,4 @@ public/
 _multiconfig.yml
 .vscode
 .deploy_git
+backup/

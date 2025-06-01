@@ -60,8 +60,7 @@ tags:
 
 ### 预期解：虚拟机的逆向
 
-既然已经知道是`DeviceIoControl`，那就看看`DRIVER_OBJECT`里的
-`MajorFunction`。
+既然已经知道是`DeviceIoControl`，那就看看`DRIVER_OBJECT`里的`MajorFunction`。
 ![driver object](image-16.png)
 
 第十五个函数就是`DeviceIoControl`的处理函数了，下断点，再去用户层发请求看看。
@@ -70,13 +69,13 @@ tags:
 成功被断下。
 ![break on DeviceIoControl](image-18.png)
 
-在ida里可以看到这个函数超级大，inline了一堆东西。
+在IDA里可以看到这个函数超级大，inline了一堆东西。
 ![big function](image-19.png)
 
 另外还发现它调用了一个看起来像虚拟机的函数。
 ![virtual machine](image-20.png)
 
-把伪代码扔给chatgpt看。
+把伪代码扔给ChatGPT看。
 ![chatgpt](image-21.png)
 
 基本上都是正确的，接下来逆向虚拟机实际执行的代码，对`vm_init`下断点。
@@ -90,7 +89,7 @@ tags:
 
 根据虚拟机代码中的定义可以得出这段虚拟机代码是将两个输入的数字异或，第一个数字为buffer的长度。
 
-通过ida查看到编码后的username和password为：
+通过IDA查看到编码后的username和password为：
 ![encoded value](image-25.png)
 
 编写一个python脚本解密：

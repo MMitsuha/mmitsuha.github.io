@@ -4,6 +4,7 @@ date: 2024-09-20 01:42:13
 categories:
     - "CTF"
 tags: 
+    - "hgame"
 ---
 
 ## Enjoy Coffee
@@ -30,6 +31,8 @@ public class indexController {
   }
 }
 ```
+
+<!-- more -->
 
 看到一个`setStaticMethodExpression(true)`，提示我们使用静态方法，然后看到了一个同样是[JFinal的CTF题](https://pankas.top/2023/11/13/2023浙江省赛决赛web-wp/)，得知构造`JShell`然后再通过`getRuntime().exec()`来执行`Shell命令`的方法。~~通过ChatGPT~~，构造出如下字符串~~(其实题目改之前我就知道`flag`在根目录下😈)~~：
 

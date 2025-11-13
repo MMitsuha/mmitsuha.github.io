@@ -4,6 +4,7 @@ date: 2025-06-01 17:59:19
 categories:
     - "CTF"
 tags: 
+    - "d3ctf"
 ---
 
 ## 中文
@@ -16,6 +17,8 @@ tags:
 打开YDArk，看到驱动注册了两个回调和一个线程。
 ![YDArk callback](image-1.png)
 ![YDArk thread](image-2.png)
+
+<!-- more -->
 
 直接调试client，发现创建了一个shellcode，引发除零异常以隐藏程序控制流。
 ![divide zero](image-3.png)

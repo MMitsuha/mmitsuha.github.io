@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://winkiller.github.io/about/index.html</loc>
+    <loc>https://blog.mmitsuha.xyz/about/index.html</loc>
     
     <lastmod>2025-11-13</lastmod>
     
@@ -11,7 +11,7 @@
   </url>
   
   <url>
-    <loc>https://winkiller.github.io/friends/index.html</loc>
+    <loc>https://blog.mmitsuha.xyz/friends/index.html</loc>
     
     <lastmod>2025-11-13</lastmod>
     
@@ -20,7 +20,7 @@
   </url>
   
   <url>
-    <loc>https://winkiller.github.io/2025/06/01/19/</loc>
+    <loc>https://blog.mmitsuha.xyz/2024/09/20/13/</loc>
     
     <lastmod>2025-11-13</lastmod>
     
@@ -29,7 +29,7 @@
   </url>
   
   <url>
-    <loc>https://winkiller.github.io/2024/09/20/13/</loc>
+    <loc>https://blog.mmitsuha.xyz/2025/11/13/22/</loc>
     
     <lastmod>2025-11-13</lastmod>
     
@@ -38,7 +38,7 @@
   </url>
   
   <url>
-    <loc>https://winkiller.github.io/2025/11/13/22/</loc>
+    <loc>https://blog.mmitsuha.xyz/2025/06/01/19/</loc>
     
     <lastmod>2025-11-13</lastmod>
     
@@ -47,7 +47,7 @@
   </url>
   
   <url>
-    <loc>https://winkiller.github.io/tags/index.html</loc>
+    <loc>https://blog.mmitsuha.xyz/categories/index.html</loc>
     
     <lastmod>2025-06-01</lastmod>
     
@@ -56,7 +56,7 @@
   </url>
   
   <url>
-    <loc>https://winkiller.github.io/categories/index.html</loc>
+    <loc>https://blog.mmitsuha.xyz/tags/index.html</loc>
     
     <lastmod>2025-06-01</lastmod>
     
@@ -65,7 +65,7 @@
   </url>
   
   <url>
-    <loc>https://winkiller.github.io/2024/03/17/13/</loc>
+    <loc>https://blog.mmitsuha.xyz/2024/03/17/13/</loc>
     
     <lastmod>2025-06-01</lastmod>
     
@@ -75,7 +75,7 @@
   
 
   <url>
-    <loc>https://winkiller.github.io/</loc>
+    <loc>https://blog.mmitsuha.xyz/</loc>
     <lastmod>2025-11-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -83,14 +83,14 @@
 
   
   <url>
-    <loc>https://winkiller.github.io/tags/d3ctf/</loc>
+    <loc>https://blog.mmitsuha.xyz/tags/hgame/</loc>
     <lastmod>2025-11-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://winkiller.github.io/tags/hgame/</loc>
+    <loc>https://blog.mmitsuha.xyz/tags/d3ctf/</loc>
     <lastmod>2025-11-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -99,14 +99,14 @@
 
   
   <url>
-    <loc>https://winkiller.github.io/categories/CTF/</loc>
+    <loc>https://blog.mmitsuha.xyz/categories/CTF/</loc>
     <lastmod>2025-11-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://winkiller.github.io/categories/%E9%97%B2%E8%81%8A/</loc>
+    <loc>https://blog.mmitsuha.xyz/categories/%E9%97%B2%E8%81%8A/</loc>
     <lastmod>2025-11-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

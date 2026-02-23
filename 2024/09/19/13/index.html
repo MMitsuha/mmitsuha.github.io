@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="Eu0uQYpKZX6Sx1fdlifKq0tyJnqDfDvRkD1G2XFhyAE">
+  <meta name="msvalidate.01" content="727D1DF0A0AC0A64A8481B3E086EEE18">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.mmitsuha.xyz","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"github","dark":"github-dark-dimmed"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"language":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="ArchitectureOverviewm0n1t0r is a cross-platform C2 framework written in Rust with a React web dashboard. It uses a client-server model where agents connect back to the server over TLS, and operators i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="m0n1t0r Architecture">
+<meta property="og:url" content="https://blog.mmitsuha.xyz/2024/09/19/13/index.html">
+<meta property="og:site_name" content="Mitsuha&#39;s Blog">
+<meta property="og:description" content="ArchitectureOverviewm0n1t0r is a cross-platform C2 framework written in Rust with a React web dashboard. It uses a client-server model where agents connect back to the server over TLS, and operators i">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-19T16:42:13.000Z">
+<meta property="article:modified_time" content="2026-02-23T06:05:40.756Z">
+<meta property="article:author" content="Mitsuha">
+<meta property="article:tag" content="m0n1t0r">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.mmitsuha.xyz/2024/09/19/13/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.mmitsuha.xyz/2024/09/19/13/","path":"/2024/09/19/13/","title":"m0n1t0r Architecture"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>m0n1t0r Architecture | Mitsuha's Blog</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;b9f35cfe27e3457f9ab1648369f9d983&quot;}'></script>
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js" defer></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mitsuha's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">君の名は。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-friends"><a href="/friends/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Architecture"><span class="nav-number">1.</span> <span class="nav-text">Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Overview"><span class="nav-number">1.1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Workspace-Structure"><span class="nav-number">1.2.</span> <span class="nav-text">Workspace Structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Communication-Model"><span class="nav-number">1.3.</span> <span class="nav-text">Communication Model</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Client-%E2%86%94-Server-Bidirectional-Async-RPC"><span class="nav-number">1.3.1.</span> <span class="nav-text">Client ↔ Server: Bidirectional Async RPC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Server-%E2%86%94-UI-REST-WebSocket"><span class="nav-number">1.3.2.</span> <span class="nav-text">Server ↔ UI: REST + WebSocket</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Server-Architecture"><span class="nav-number">1.4.</span> <span class="nav-text">Server Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Entry-Point"><span class="nav-number">1.4.1.</span> <span class="nav-text">Entry Point</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#State-Management"><span class="nav-number">1.4.2.</span> <span class="nav-text">State Management</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#API-Route-Layout"><span class="nav-number">1.4.3.</span> <span class="nav-text">API Route Layout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Response-Envelope"><span class="nav-number">1.4.4.</span> <span class="nav-text">Response Envelope</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Client-Architecture"><span class="nav-number">1.5.</span> <span class="nav-text">Client Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Entry-Point-1"><span class="nav-number">1.5.1.</span> <span class="nav-text">Entry Point</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Agent-Pattern"><span class="nav-number">1.5.2.</span> <span class="nav-text">Agent Pattern</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Platform-Dispatch"><span class="nav-number">1.5.3.</span> <span class="nav-text">Platform Dispatch</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Common-Library"><span class="nav-number">1.6.</span> <span class="nav-text">Common Library</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RPC-Traits"><span class="nav-number">1.6.1.</span> <span class="nav-text">RPC Traits</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Error-Handling"><span class="nav-number">1.6.2.</span> <span class="nav-text">Error Handling</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-UI"><span class="nav-number">1.7.</span> <span class="nav-text">Web UI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tech-Stack"><span class="nav-number">1.7.1.</span> <span class="nav-text">Tech Stack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Structure"><span class="nav-number">1.7.2.</span> <span class="nav-text">Structure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Routing"><span class="nav-number">1.7.3.</span> <span class="nav-text">Routing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Remote-Desktop-Streaming"><span class="nav-number">1.7.4.</span> <span class="nav-text">Remote Desktop Streaming</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Build-System"><span class="nav-number">1.8.</span> <span class="nav-text">Build System</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Platform-Feature-Flags"><span class="nav-number">1.8.1.</span> <span class="nav-text">Platform Feature Flags</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TLS-Certificate-Generation"><span class="nav-number">1.8.2.</span> <span class="nav-text">TLS Certificate Generation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-FFI"><span class="nav-number">1.8.3.</span> <span class="nav-text">C++ FFI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deployment"><span class="nav-number">1.9.</span> <span class="nav-text">Deployment</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-Multi-Stage-Build"><span class="nav-number">1.9.1.</span> <span class="nav-text">Docker (Multi-Stage Build)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CI-CD"><span class="nav-number">1.9.2.</span> <span class="nav-text">CI&#x2F;CD</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Design-Principles"><span class="nav-number">1.10.</span> <span class="nav-text">Design Principles</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mitsuha"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Mitsuha</p>
+  <div class="site-description" itemprop="description">🏳️‍⚧️ An anime lover and C++ & Rust programming blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/mmitsuha" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mmitsuha" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mmitsuha@outlook.com" title="E-Mail → mailto:mmitsuha@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/miymitsuha" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;miymitsuha" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.mmitsuha.xyz/2024/09/19/13/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Mitsuha">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mitsuha's Blog">
+      <meta itemprop="description" content="🏳️‍⚧️ An anime lover and C++ & Rust programming blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="m0n1t0r Architecture | Mitsuha's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          m0n1t0r Architecture
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-20 01:42:13" itemprop="dateCreated datePublished" datetime="2024-09-20T01:42:13+09:00">2024-09-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-02-23 15:05:40" itemprop="dateModified" datetime="2026-02-23T15:05:40+09:00">2026-02-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">开发</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>m0n1t0r is a cross-platform C2 framework written in Rust with a React web dashboard. It uses a client-server model where agents connect back to the server over TLS, and operators interact through a REST/WebSocket API served alongside a single-page web application.</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">┌───────────┐  TLS (remoc RPC)  ┌───────────────┐  REST / WebSocket  ┌────────────┐</span><br><span class="line">│  Client    │◄────────────────►│    Server      │◄──────────────────►│  Web UI    │</span><br><span class="line">│  (Agent)   │   Port 27853     │  (Actix-web)   │   Port 10801      │  (React)   │</span><br><span class="line">└───────────┘                   └───────────────┘                    └────────────┘</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="Workspace-Structure"><a href="#Workspace-Structure" class="headerlink" title="Workspace Structure"></a>Workspace Structure</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">m0n1t0r/</span><br><span class="line">├── m0n1t0r-server/    Server binary — TLS listener + HTTP/WebSocket API</span><br><span class="line">├── m0n1t0r-client/    Agent binary — connects back to server over TLS</span><br><span class="line">├── m0n1t0r-common/    Shared contract — RPC trait definitions, error types, data models</span><br><span class="line">├── m0n1t0r-ui/        Web dashboard — React + TypeScript + Ant Design</span><br><span class="line">├── m0n1t0r-build/     Build-time utilities — cert embedding, version tracking, dep validation</span><br><span class="line">├── m0n1t0r-macro/     Procedural macros</span><br><span class="line">├── xtask/             Build automation — cert generation, UPX compression</span><br><span class="line">└── deps/              Vendored dependencies — qqkey, scrap (wayland), upx</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="Communication-Model"><a href="#Communication-Model" class="headerlink" title="Communication Model"></a>Communication Model</h2><h3 id="Client-↔-Server-Bidirectional-Async-RPC"><a href="#Client-↔-Server-Bidirectional-Async-RPC" class="headerlink" title="Client ↔ Server: Bidirectional Async RPC"></a>Client ↔ Server: Bidirectional Async RPC</h3><p>The transport layer uses TLS (rustls) on port 27853. On top of TLS, <code>remoc</code> establishes typed bidirectional channels with MessagePack serialization.</p>
+<p><strong>Connection handshake:</strong></p>
+<ol>
+<li>Client initiates TLS connection. The CA certificate is embedded in the client binary at compile time (<code>certs/ca.crt</code>).</li>
+<li><code>remoc::Connect::io()</code> creates two typed channel pairs over the TLS stream.</li>
+<li>Server sends a <code>ServerClient</code> RPC stub to the client; client sends a <code>ClientClient</code> RPC stub to the server.</li>
+<li>Both sides can now invoke methods on each other asynchronously.</li>
+<li>Server registers the client in <code>ServerMap</code> and broadcasts a <code>ConnectEvent::Connect</code> notification.</li>
+</ol>
+<p>The client auto-reconnects every 10 seconds on connection failure.</p>
+<h3 id="Server-↔-UI-REST-WebSocket"><a href="#Server-↔-UI-REST-WebSocket" class="headerlink" title="Server ↔ UI: REST + WebSocket"></a>Server ↔ UI: REST + WebSocket</h3><p>Actix-web serves the HTTP API on port 10801 at <code>/api/v1/</code>. WebSocket endpoints are used for:</p>
+<ul>
+<li>Interactive shell sessions (<code>/client/{addr}/process/interactive</code>)</li>
+<li>Remote desktop streaming (<code>/client/{addr}/rd/stream/*</code>)</li>
+<li>Server event notifications (<code>/server/notification</code>)</li>
+</ul>
+<h2 id="Server-Architecture"><a href="#Server-Architecture" class="headerlink" title="Server Architecture"></a>Server Architecture</h2><h3 id="Entry-Point"><a href="#Entry-Point" class="headerlink" title="Entry Point"></a>Entry Point</h3><p>The server runs two concurrent tasks:</p>
+<ul>
+<li><strong>TLS Listener</strong> (<code>conn::run</code>) — Accepts client connections on port 27853, establishes remoc channels, tracks clients in <code>ServerMap</code>.</li>
+<li><strong>HTTP API</strong> (<code>api::run</code>) — Actix-web server on port 10801 with session middleware, CORS, and route handlers.</li>
+</ul>
+<h3 id="State-Management"><a href="#State-Management" class="headerlink" title="State Management"></a>State Management</h3><figure class="highlight rust"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">ServerMap</span> {</span><br><span class="line">    map: HashMap&lt;SocketAddr, Arc&lt;RwLock&lt;ServerObj&gt;&gt;&gt;,</span><br><span class="line">    notification_rx: WatchReceiver&lt;ConnectEvent&gt;,</span><br><span class="line">    notification_tx: WatchSender&lt;ConnectEvent&gt;,</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">ServerObj</span> {</span><br><span class="line">    addr: SocketAddr,</span><br><span class="line">    client_client: ClientClient,   <span class="comment">// RPC stub to invoke client methods</span></span><br><span class="line">    canceller: CancellationToken,</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>API handlers look up clients in <code>ServerMap</code>, obtain the <code>ClientClient</code> RPC stub, and call methods through it. The <code>get_agent!</code> macro encapsulates this pattern:</p>
+<figure class="highlight rust"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> (agent, _) = get_agent!(data, &amp;addr, fs_agent)?;</span><br><span class="line">agent.<span class="title function_ invoke__">list</span>(path).<span class="keyword">await</span>?</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="API-Route-Layout"><a href="#API-Route-Layout" class="headerlink" title="API Route Layout"></a>API Route Layout</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">/api/v1/</span><br><span class="line">├── /client</span><br><span class="line">│   ├── GET     /                              List all clients</span><br><span class="line">│   ├── GET     /{addr}                        Client details</span><br><span class="line">│   ├── DELETE  /{addr}                        Terminate client</span><br><span class="line">│   ├── /{addr}/fs                             File system operations</span><br><span class="line">│   ├── /{addr}/process                        Process management + interactive shell</span><br><span class="line">│   ├── /{addr}/proxy                          SOCKS5 / TCP forward proxy</span><br><span class="line">│   ├── /{addr}/rd                             Remote desktop (display list + streams)</span><br><span class="line">│   ├── /{addr}/network                        Download file to client</span><br><span class="line">│   ├── /{addr}/qq                             QQ integration</span><br><span class="line">│   ├── /{addr}/update                         Client self-update</span><br><span class="line">│   └── /{addr}/autorun                        Persistence management</span><br><span class="line">├── /server</span><br><span class="line">│   ├── GET     /                              Server info</span><br><span class="line">│   ├── GET     /notification                  WebSocket: connect/disconnect events</span><br><span class="line">│   └── /proxy                                 Proxy lifecycle</span><br><span class="line">└── /session                                   Authentication (TODO)</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Response-Envelope"><a href="#Response-Envelope" class="headerlink" title="Response Envelope"></a>Response Envelope</h3><p>All API responses use a standard envelope:</p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">{</span> <span class="attr">"code"</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span> <span class="attr">"body"</span><span class="punctuation">:</span> &lt;T&gt; <span class="punctuation">}</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>Errors are mapped to HTTP status codes in <code>web/error.rs</code>.</p>
+<h2 id="Client-Architecture"><a href="#Client-Architecture" class="headerlink" title="Client Architecture"></a>Client Architecture</h2><h3 id="Entry-Point-1"><a href="#Entry-Point-1" class="headerlink" title="Entry Point"></a>Entry Point</h3><p>The client binary hides its console window on Windows (<code>#![windows_subsystem = "windows"]</code>). In debug builds it connects to <code>127.0.0.1:27853</code>; in release builds the server address is baked in via the <code>M0N1T0R_DOMAIN</code> environment variable at compile time.</p>
+<h3 id="Agent-Pattern"><a href="#Agent-Pattern" class="headerlink" title="Agent Pattern"></a>Agent Pattern</h3><p>The client implements the <code>Client</code> RPC trait from <code>m0n1t0r-common</code>. Each capability is exposed as a factory method that returns an RPC stub:</p>
+<figure class="highlight rust"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">fn</span> <span class="title function_">fs_agent</span>(&amp;<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> AppResult&lt;fs::AgentClient&gt; {</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">obj</span> = Arc::<span class="title function_ invoke__">new</span>(RwLock::<span class="title function_ invoke__">new</span>(fs::AgentObj::<span class="title function_ invoke__">new</span>()));</span><br><span class="line">    <span class="keyword">let</span> (server, client) = fs::AgentServerSharedMut::<span class="title function_ invoke__">new</span>(obj, <span class="number">1</span>);</span><br><span class="line">    tokio::<span class="title function_ invoke__">spawn</span>(server.<span class="title function_ invoke__">serve</span>(<span class="literal">true</span>));  <span class="comment">// Spawn background RPC server</span></span><br><span class="line">    <span class="title function_ invoke__">Ok</span>(client)                          <span class="comment">// Return stub to caller</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>When the server-side API handler calls <code>client.fs_agent()</code>, the client spawns a new agent task and returns an RPC stub. The server then calls methods on that stub, which are executed on the client side.</p>
+<h3 id="Platform-Dispatch"><a href="#Platform-Dispatch" class="headerlink" title="Platform Dispatch"></a>Platform Dispatch</h3><p>Platform-specific code is selected at compile time via feature flags and the <code>declare_agents!</code> macro:</p>
+<figure class="highlight rust"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">declare_agents!(general, [proxy, network, qq, rd], [<span class="string">"general"</span>, <span class="string">"macos"</span>, <span class="string">"linux"</span>, <span class="string">"winnt"</span>]);</span><br><span class="line">declare_agents!(windows, [process, autorun, charset, fs, blind], [<span class="string">"winnt"</span>]);</span><br><span class="line">declare_agents!(general, [process, charset, fs, blind], [<span class="string">"general"</span>, <span class="string">"macos"</span>, <span class="string">"linux"</span>]);</span><br><span class="line">declare_agents!(unix, [autorun], [<span class="string">"linux"</span>, <span class="string">"macos"</span>]);</span><br></pre></td></tr></tbody></table></figure>
+
+<p>Platform-specific modules:</p>
+<table>
+<thead>
+<tr>
+<th>Directory</th>
+<th>Platforms</th>
+<th>Capabilities</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>client/general/</code></td>
+<td>All</td>
+<td>proxy, network, remote desktop, QQ</td>
+</tr>
+<tr>
+<td><code>client/windows/</code></td>
+<td>Windows</td>
+<td>ETW patching, registry autorun, shellcode injection, drive enumeration</td>
+</tr>
+<tr>
+<td><code>client/unix/</code></td>
+<td>Linux, macOS</td>
+<td>systemd/launchd persistence</td>
+</tr>
+</tbody></table>
+<h2 id="Common-Library"><a href="#Common-Library" class="headerlink" title="Common Library"></a>Common Library</h2><p><code>m0n1t0r-common</code> defines the contract between server and client.</p>
+<h3 id="RPC-Traits"><a href="#RPC-Traits" class="headerlink" title="RPC Traits"></a>RPC Traits</h3><p>All agent interfaces use the <code>#[rtc::remote]</code> macro from remoc, which generates serializable client/server stubs:</p>
+<ul>
+<li><strong><code>Client</code></strong> — Top-level trait: version info, system info, agent factory methods, self-update</li>
+<li><strong><code>fs::Agent</code></strong> — File operations: list, read, write, delete, drives, rename, copy</li>
+<li><strong><code>process::Agent</code></strong> — Process list, execute, interactive shell, kill, shellcode injection</li>
+<li><strong><code>proxy::Agent</code></strong> — TCP connect, TCP forward (for SOCKS5/port forwarding)</li>
+<li><strong><code>rd::Agent</code></strong> — Display enumeration, video streaming (VP9/MPEG-TS encoded frames)</li>
+<li><strong><code>network::Agent</code></strong> — File download to client</li>
+<li><strong><code>qq::Agent</code></strong> — QQ protocol integration</li>
+<li><strong><code>autorun::Agent</code></strong> — Persistence mechanisms</li>
+<li><strong><code>charset::Agent</code></strong> — Charset conversion (Windows ANSI ↔ UTF-8)</li>
+</ul>
+<h3 id="Error-Handling"><a href="#Error-Handling" class="headerlink" title="Error Handling"></a>Error Handling</h3><p>A typed error hierarchy using <code>thiserror</code>, fully serializable for RPC transmission:</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Error</span><br><span class="line">├── Network   (RpcCall, ChannelDisconnect, InvalidPeer, ...)</span><br><span class="line">├── Io        (Tokio, InvalidUserDirectory, Environment)</span><br><span class="line">├── Parse     (Protobuf, InvalidParameter, Certificate, DnsName)</span><br><span class="line">├── External  (Ffi, QQKey)</span><br><span class="line">├── NotFound</span><br><span class="line">├── InitializationFailed</span><br><span class="line">├── Unsupported</span><br><span class="line">├── Unimplemented</span><br><span class="line">└── Unknown</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="Web-UI"><a href="#Web-UI" class="headerlink" title="Web UI"></a>Web UI</h2><h3 id="Tech-Stack"><a href="#Tech-Stack" class="headerlink" title="Tech Stack"></a>Tech Stack</h3><p>React 19 + TypeScript + Vite + Ant Design (dark theme) + React Router. Uses bun as the package manager.</p>
+<h3 id="Structure"><a href="#Structure" class="headerlink" title="Structure"></a>Structure</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">src/</span><br><span class="line">├── api/           Typed API client wrappers (axios-based)</span><br><span class="line">├── components/    Reusable UI: Terminal (xterm.js), RemoteDesktop (jsmpeg), FileManager, etc.</span><br><span class="line">├── pages/         Route pages: Dashboard, ClientList, ClientDetail, ServerInfo, Settings</span><br><span class="line">├── hooks/         useWebSocket, useNotification (server event listener)</span><br><span class="line">├── utils/         Formatting helpers, persistent settings</span><br><span class="line">└── types/         TypeScript declarations for JS-only packages</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Routing"><a href="#Routing" class="headerlink" title="Routing"></a>Routing</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/                   Dashboard</span><br><span class="line">/clients            Client list</span><br><span class="line">/clients/:addr      Client detail (tabs: fs, process, proxy, rd, network, ...)</span><br><span class="line">/server             Server info</span><br><span class="line">/settings           Settings</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Remote-Desktop-Streaming"><a href="#Remote-Desktop-Streaming" class="headerlink" title="Remote Desktop Streaming"></a>Remote Desktop Streaming</h3><p>The UI supports three stream formats via WebSocket:</p>
+<ul>
+<li><strong>RGB</strong> — Raw pixel data</li>
+<li><strong>YUV</strong> — Raw YUV frames</li>
+<li><strong>MPEG1Video</strong> — MPEG-TS container decoded by <code>@cycjimmy/jsmpeg-player</code> (jsmpeg)</li>
+</ul>
+<h2 id="Build-System"><a href="#Build-System" class="headerlink" title="Build System"></a>Build System</h2><h3 id="Platform-Feature-Flags"><a href="#Platform-Feature-Flags" class="headerlink" title="Platform Feature Flags"></a>Platform Feature Flags</h3><p>Mutually exclusive, required at compile time:</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cargo build --features macos -r    <span class="comment"># macOS</span></span><br><span class="line">cargo build --features linux -r    <span class="comment"># Linux</span></span><br><span class="line">cargo build --features winnt -r    <span class="comment"># Windows</span></span><br><span class="line">cargo build --features winnt-uac -r  <span class="comment"># Windows with UAC elevation</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="TLS-Certificate-Generation"><a href="#TLS-Certificate-Generation" class="headerlink" title="TLS Certificate Generation"></a>TLS Certificate Generation</h3><p><code>cargo xtask -c</code> generates a self-signed CA and end-entity certificate. Environment variables control the certificate subject fields (<code>M0N1T0R_DOMAIN</code>, <code>M0N1T0R_COUNTRY</code>, etc.). The CA cert is embedded in the client at compile time for certificate pinning.</p>
+<h3 id="C-FFI"><a href="#C-FFI" class="headerlink" title="C++ FFI"></a>C++ FFI</h3><p>Platform-specific native code is built with xmake and linked via the cxx crate (<code>m0n1t0r-cpp-*-lib</code>).</p>
+<h2 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h2><h3 id="Docker-Multi-Stage-Build"><a href="#Docker-Multi-Stage-Build" class="headerlink" title="Docker (Multi-Stage Build)"></a>Docker (Multi-Stage Build)</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Stage 1 (server-builder):  Rust nightly + vcpkg → server binary</span><br><span class="line">Stage 2 (ui-builder):      Bun → static React assets</span><br><span class="line">Stage 3 (runtime):         Debian + nginx + server binary + UI assets</span><br></pre></td></tr></tbody></table></figure>
+
+<p>nginx serves the UI on port 80 and proxies <code>/api/</code> to the server on port 10801. Port 27853 is exposed for client TLS connections.</p>
+<h3 id="CI-CD"><a href="#CI-CD" class="headerlink" title="CI/CD"></a>CI/CD</h3><ul>
+<li><strong>build.yml</strong> — Matrix build across macOS, Linux, Windows. Installs Rust, xmake, vcpkg dependencies. Produces binary artifacts.</li>
+<li><strong>docker.yml</strong> — Builds Docker image and pushes to <code>ghcr.io/mmitsuha/m0n1t0r:nightly</code> on master push.</li>
+</ul>
+<h2 id="Design-Principles"><a href="#Design-Principles" class="headerlink" title="Design Principles"></a>Design Principles</h2><ol>
+<li><strong>Contract-first</strong>: RPC traits in <code>m0n1t0r-common</code> define the interface; server and client implement against the same contract.</li>
+<li><strong>Agent-per-capability</strong>: Each feature (fs, process, proxy, rd) is an independent agent with its own RPC channel, allowing fine-grained lifecycle management.</li>
+<li><strong>Platform abstraction via compile-time dispatch</strong>: Feature flags and macros select platform-specific implementations without runtime overhead.</li>
+<li><strong>Size-optimized release builds</strong>: <code>opt-level = "z"</code>, LTO, single codegen unit, symbol stripping, <code>panic = abort</code>, optional UPX compression.</li>
+<li><strong>Typed errors across boundaries</strong>: All errors are serializable and transmitted over RPC, then mapped to HTTP status codes at the API layer.</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Mitsuha
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.mmitsuha.xyz/2024/09/19/13/" title="m0n1t0r Architecture">https://blog.mmitsuha.xyz/2024/09/19/13/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/miymitsuha">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/m0n1t0r/" rel="tag"><i class="fa fa-tag"></i> m0n1t0r</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/03/16/13/" rel="prev" title="Hello World">
+                  <i class="fa fa-angle-left"></i> Hello World
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/19/13/" rel="next" title="HGame Mini Writeup">
+                  HGame Mini Writeup <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2023 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Mitsuha</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/mmitsuha" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"mmitsuha","repo":"mmitsuha.github.io","client_id":"Ov23liVGnPsAXo0ubWF0","client_secret":"7f77709f82466e7913658abea084b30cdc8c3bef","admin_user":"mmitsuha","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":null,"body":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"689ab00830d7ec19898a1980f391ce0a"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
+
+</body>
+</html>
